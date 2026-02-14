@@ -7,7 +7,7 @@
 
 - name: Check existence of container-socket-proxy systemd service
   ansible.builtin.stat:
-    path: "{{ devture_systemd_docker_base_systemd_path }}/{{ container_socket_proxy_identifier }}.service"
+    path: "{{ sysd_docker_service_path }}/{{ container_socket_proxy_identifier }}.service"
   register: container_socket_proxy_service_stat
 
 - name: Uninstall container-socket-proxy systemd services and files
@@ -21,17 +21,17 @@
 
     - name: Ensure container-socket-proxy systemd service does not exist
       ansible.builtin.file:
-        path: "{{ devture_systemd_docker_base_systemd_path }}/{{ container_socket_proxy_identifier }}.service"
+        path: "{{ sysd_docker_service_path }}/{{ container_socket_proxy_identifier }}.service"
         state: absent
 
     - name: Ensure container-socket-proxy container network does not exist via community.docker.docker_network
-      when: devture_systemd_docker_base_container_network_creation_method == 'ansible-module'
+      when: sysd_docker_net_creation_method == 'ansible-module'
       community.docker.docker_network:
         name: "{{ container_socket_proxy_container_network }}"
         state: absent
 
     - name: Ensure container-socket-proxy container network does not exist via ansible.builtin.command
-      when: devture_systemd_docker_base_container_network_creation_method == 'command'
+      when: sysd_docker_net_creation_method == 'command'
       ansible.builtin.command:
         cmd: >-
           {{ sysd_docker_host_command }} network rm
