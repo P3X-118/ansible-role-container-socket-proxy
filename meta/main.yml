@@ -1,7 +1,7 @@
 ---
 galaxy_info:
-  author: Slavi Pantaleev
-  company: Devture Ltd
+  author: Oneill
+  company: SGC
   description: Container Socket Proxy role
   platforms:
     - name: Debian
